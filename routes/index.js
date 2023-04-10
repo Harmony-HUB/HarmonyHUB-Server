@@ -2,8 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/", function (req, res) {
-  res.render("index", { title: "Express" });
+router.get("/", (req, res) => {
+  res.json({ result: "file" });
 });
 
 module.exports = router;

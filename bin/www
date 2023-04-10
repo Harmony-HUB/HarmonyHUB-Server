@@ -1,18 +1,6 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-shadow */
-/* eslint-disable no-use-before-define */
 const debug = require("debug")("harmonyhub-server:server");
 const http = require("http");
 const app = require("../app");
-
-const port = normalizePort(process.env.PORT || "3000");
-app.set("port", port);
-
-const server = http.createServer(app);
-
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -27,6 +15,11 @@ const normalizePort = val => {
 
   return false;
 };
+
+const port = normalizePort(process.env.PORT || "3001");
+app.set("port", port);
+
+const server = http.createServer(app);
 
 const onError = error => {
   if (error.syscall !== "listen") {
@@ -54,3 +47,7 @@ const onListening = () => {
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
 };
+
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);
