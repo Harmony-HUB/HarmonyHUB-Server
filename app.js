@@ -11,6 +11,7 @@ const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
 const protectedRouter = require("./routes/protected");
 const uploadAudioRouter = require("./routes/uploadAudio");
+const songsRouter = require("./routes/songs");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/protected", protectedRouter);
 app.use("/uploadAudio", uploadAudioRouter);
+app.use("/songs", songsRouter);
 
 app.use((req, res, next) => {
   next(createError(404));

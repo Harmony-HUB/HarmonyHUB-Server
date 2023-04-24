@@ -3,6 +3,8 @@ require("dotenv").config();
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const path = require("path");
+const User = require("../models/User");
+const File = require("../models/File");
 
 const router = express.Router();
 
@@ -31,7 +33,27 @@ router.post("/", upload.single("audio"), async (req, res) => {
 
   try {
     const response = await s3.send(new PutObjectCommand(params));
-    console.log("Audio file uploaded:", response);
+    console.log(response);
+
+    const { userEmail, title, description } = req.body;
+
+    const user = await User.findOne({ email: userEmail });
+
+    if (!user) {
+      return res.status(400).send("Invalid user ID");
+    }
+
+    const newFile = new File({
+      userID: user.id,
+      fileName: req.file.originalname,
+      fileType: req.file.mimetype,
+      fileSize: req.file.size,
+      s3Location: params.Key,
+      title,
+      description,
+    });
+
+    await newFile.save();
     res.sendStatus(200);
   } catch (error) {
     console.error("Error uploading audio file:", error);
