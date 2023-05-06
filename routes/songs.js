@@ -1,19 +1,10 @@
-/* eslint-disable no-unused-vars */
 const express = require("express");
-const { S3Client } = require("@aws-sdk/client-s3");
 const File = require("../models/File");
+const { authenticateJWT } = require("../middleware/authenticateJWT");
 
 const router = express.Router();
 
-const s3 = new S3Client({
-  region: process.env.REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-});
-
-router.get("/", async (req, res) => {
+router.get("/", authenticateJWT, async (req, res) => {
   try {
     const files = await File.find().populate("userID");
 
@@ -31,12 +22,9 @@ router.get("/", async (req, res) => {
       };
     });
 
-    console.log(songs);
-
     res.status(200).json(songs);
   } catch (error) {
-    console.error("Error fetching song files:", error);
-    res.status(500).send("Error fetching song files");
+    res.status(500).send("노래 파일 불러오는 중 오류 발생");
   }
 });
 
