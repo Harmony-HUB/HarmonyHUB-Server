@@ -10,6 +10,8 @@
   ],
   "rules": {
     "react/jsx-filename-extension": 0,
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-restricted-globals": ["error", "event", "fdescribe"]
+
   }
 }

@@ -11,7 +11,7 @@ const refreshSecret = process.env.REFRESH_SECRET;
 
 const generateAccessToken = user => {
   return jwt.sign({ id: user.id }, accessSecret, {
-    expiresIn: "1m",
+    expiresIn: "15m",
   });
 };
 
