@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", authenticateJWT, async (req, res) => {
   try {
-    const files = await File.find().populate("userID");
+    const files = await File.find({ userID: req.user.id }).populate("userID");
 
     const songs = files.map(file => {
       const fileExtension = file.fileName.split(".").pop().toLowerCase();
