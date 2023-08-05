@@ -1,10 +1,6 @@
-const express = require("express");
-const File = require("../models/File");
-const { authenticateJWT } = require("../middleware/authenticateJWT");
+const File = require("../../models/File");
 
-const router = express.Router();
-
-router.get("/", authenticateJWT, async (req, res) => {
+const getUserFile = async (req, res, next) => {
   try {
     const files = await File.find({ userID: req.user.id }).populate("userID");
 
@@ -23,9 +19,10 @@ router.get("/", authenticateJWT, async (req, res) => {
     });
 
     res.status(200).json(songs);
+    next();
   } catch (error) {
     res.status(500).send("노래 파일 불러오는 중 오류 발생");
   }
-});
+};
 
-module.exports = router;
+module.exports = getUserFile;

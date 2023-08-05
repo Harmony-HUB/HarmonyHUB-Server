@@ -1,17 +1,10 @@
-const express = require("express");
-const User = require("../models/User");
+const User = require("../../models/User");
 const {
-  generateAccessToken,
   generateRefreshToken,
+  generateAccessToken,
 } = require("../utils/tokens");
 
-const router = express.Router();
-
-router.get("/", (req, res) => {
-  res.json({ result: "user" });
-});
-
-router.post("/", async (req, res) => {
+const registerUser = async (req, res, next) => {
   const { email, name } = req.body;
 
   try {
@@ -28,10 +21,12 @@ router.post("/", async (req, res) => {
     const accessToken = generateAccessToken(user);
 
     res.json({ refreshToken: user.refreshToken, accessToken });
+
+    next();
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
-});
+};
 
-module.exports = router;
+module.exports = registerUser;

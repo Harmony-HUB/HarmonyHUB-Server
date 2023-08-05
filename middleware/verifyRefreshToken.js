@@ -1,12 +1,9 @@
-const express = require("express");
 const jwt = require("jsonwebtoken");
-const { refreshSecret, generateAccessToken } = require("../utils/tokens");
+const { refreshSecret } = require("../src/utils/tokens");
 const User = require("../models/User");
-const { refreshTokenMiddleware } = require("../middleware/authenticateJWT");
+const { generateAccessToken } = require("../src/utils/tokens");
 
-const router = express.Router();
-
-router.post("/refresh", refreshTokenMiddleware, async (req, res) => {
+const verifyRefreshToken = async (req, res, next) => {
   const { refreshToken } = req.body;
 
   if (!refreshToken) {
@@ -21,11 +18,13 @@ router.post("/refresh", refreshTokenMiddleware, async (req, res) => {
 
     if (foundUser && foundUser.refreshToken === refreshToken) {
       const accessToken = generateAccessToken(user);
+
       res.json({ access_token: accessToken });
+      next();
     } else {
       res.status(403).json({ message: "새로고침 토큰이 유효하지 않습니다." });
     }
   });
-});
+};
 
-module.exports = router;
+module.exports = verifyRefreshToken;

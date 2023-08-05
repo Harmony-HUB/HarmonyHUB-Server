@@ -1,28 +1,12 @@
-const express = require("express");
-require("dotenv").config();
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
-const multer = require("multer");
+const { PutObjectCommand } = require("@aws-sdk/client-s3");
 const path = require("path");
-const User = require("../models/User");
-const File = require("../models/File");
-const { authenticateJWT } = require("../middleware/authenticateJWT");
+const User = require("../../models/User");
+const File = require("../../models/File");
+const s3 = require("../config/s3Client");
 
-const router = express.Router();
-
-const s3 = new S3Client({
-  region: process.env.REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-});
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-
-router.post("/", authenticateJWT, upload.single("audio"), async (req, res) => {
+exports.uploadToS3 = async (req, res, next) => {
   if (!req.file) {
-    return res.status(400).send("업로드된 파일이 없습니다.");
+    return res.status(400).send("파일이 없습니다.");
   }
 
   const params = {
@@ -34,7 +18,17 @@ router.post("/", authenticateJWT, upload.single("audio"), async (req, res) => {
 
   try {
     await s3.send(new PutObjectCommand(params));
+    req.s3Key = params.Key;
 
+    next();
+  } catch (error) {
+    console.error("업로드 중 오류가 발생했습니다. : ", error);
+    res.status(500).send("업로드 중 오류가 발생했습니다.");
+  }
+};
+
+exports.saveFile = async (req, res, next) => {
+  try {
     const { userEmail, title, description } = req.body;
 
     const user = await User.findOne({ email: userEmail });
@@ -48,17 +42,17 @@ router.post("/", authenticateJWT, upload.single("audio"), async (req, res) => {
       fileName: req.file.originalname,
       fileType: req.file.mimetype,
       fileSize: req.file.size,
-      s3Location: params.Key,
+      s3Location: req.s3Key,
       title,
       description,
     });
 
     await newFile.save();
     res.sendStatus(200);
+
+    next();
   } catch (error) {
     console.error("업로드 중 오류가 발생했습니다.:", error);
     res.status(500).send("업로드 중 오류가 발생했습니다.");
   }
-});
-
-module.exports = router;
+};
