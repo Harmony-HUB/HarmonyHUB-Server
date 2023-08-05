@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const multer = require("multer");
-const { authenticateJWT } = require("../../middleware/authenticateJWT");
+const { authenticateJWT } = require("../middleware/authenticateJWT");
 const {
   uploadToS3,
   saveFile,

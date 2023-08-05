@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "moduleDetection": "force"
+  },
+  "include": ["src/**/*.ts", "bin/**/*.ts", "bin/www"],
+  "exclude": ["node_modules"]
+}

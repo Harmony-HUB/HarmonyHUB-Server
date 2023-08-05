@@ -2,8 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const loaders = require("./src/loaders/loaders");
 
-const app = express();
+const expressApp = express();
 
-loaders(app);
+loaders(expressApp);
 
-module.exports = app;
+module.exports = expressApp;

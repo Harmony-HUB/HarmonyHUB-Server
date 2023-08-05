@@ -1,7 +1,7 @@
 const { PutObjectCommand } = require("@aws-sdk/client-s3");
 const path = require("path");
-const User = require("../../models/User");
-const File = require("../../models/File");
+const User = require("../models/User");
+const File = require("../models/File");
 const s3 = require("../config/s3Client");
 
 exports.uploadToS3 = async (req, res, next) => {
