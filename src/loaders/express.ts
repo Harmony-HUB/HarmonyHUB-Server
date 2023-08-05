@@ -1,7 +1,7 @@
-const express = require("express");
-const logger = require("morgan");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+import express, { Express } from "express";
+import logger from "morgan";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const corsOptions = {
   origin: process.env.REACT_APP_API_URL,
@@ -10,7 +10,7 @@ const corsOptions = {
   credentials: true,
 };
 
-const expressHandler = async app => {
+const expressHandler = async (app: Express) => {
   app.use(cors(corsOptions));
   app.use(logger("dev"));
   app.use(express.json());
