@@ -1,9 +1,9 @@
-const debug = require("debug")("harmonyhub-server:server");
-const http = require("http");
-const app = require("../app");
+import debug from "debug";
+import http from "http";
+import app from "../app";
 
-const normalizePort = val => {
-  const port = parseInt(val, 10);
+const normalizePort = (val: string | number): string | number | boolean => {
+  const port = parseInt(`${val}`, 10);
 
   if (isNaN(port)) {
     return val;
@@ -21,7 +21,7 @@ app.set("port", port);
 
 const server = http.createServer(app);
 
-const onError = error => {
+const onError = (error: any) => {
   if (error.syscall !== "listen") {
     throw error;
   }
@@ -44,7 +44,11 @@ const onError = error => {
 
 const onListening = () => {
   const addr = server.address();
-  const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
+  const bind = addr
+    ? typeof addr === "string"
+      ? `pipe ${addr}`
+      : `port ${addr.port}`
+    : "unknown address";
   debug(`Listening on ${bind}`);
 };
 

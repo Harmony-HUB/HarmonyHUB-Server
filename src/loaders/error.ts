@@ -1,6 +1,6 @@
 import { Express } from "express";
 import createError from "http-errors";
-import { ExpressMiddleware, ExpressErrorMiddleware } from "../types";
+import { ExpressMiddleware, ExpressErrorMiddleware } from "../types/types";
 
 const notFoundMiddleware: ExpressMiddleware = (req, res, next) => {
   next(createError(404));

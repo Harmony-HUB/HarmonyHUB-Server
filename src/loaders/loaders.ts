@@ -11,4 +11,4 @@ const loaders = async (app: Express) => {
   await setupErrorHandlers(app);
 };
 
-module.exports = loaders;
+export default loaders;

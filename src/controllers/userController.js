@@ -2,7 +2,7 @@ const User = require("../models/User");
 const {
   generateRefreshToken,
   generateAccessToken,
-} = require("../utils/tokens");
+} = require("../utils/tokens.ts");
 
 const registerUser = async (req, res, next) => {
   const { email, name } = req.body;

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const fileSchema = new mongoose.Schema({
+const File = new mongoose.Schema({
   fileID: mongoose.Schema.Types.ObjectId,
   userID: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   fileName: { type: String, required: true },
@@ -12,4 +12,4 @@ const fileSchema = new mongoose.Schema({
   creationTime: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("File", fileSchema);
+export default mongoose.model("File", File);

@@ -7,8 +7,13 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "moduleDetection": "force"
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["src/**/*.ts", "bin/**/*.ts", "bin/www"],
+  "include": [
+    "src/**/*.ts",
+    "src/bin/**/*.ts",
+    "src/bin/www.ts",
+    "src/types/global.d.ts"
+  ],
   "exclude": ["node_modules"]
 }
