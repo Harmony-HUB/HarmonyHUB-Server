@@ -2,9 +2,12 @@ import express, { Express } from "express";
 import logger from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import CONFIG from "../config/config";
+
+const { CLIENT_URL } = CONFIG;
 
 const corsOptions = {
-  origin: process.env.REACT_APP_API_URL,
+  origin: CLIENT_URL,
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,

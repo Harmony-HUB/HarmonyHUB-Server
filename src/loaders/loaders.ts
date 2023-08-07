@@ -8,7 +8,7 @@ const loaders = async (app: Express) => {
   await connectToDatabase();
   await expressHandler(app);
   await routesHandler(app);
-  await setupErrorHandlers(app);
+  setupErrorHandlers(app);
 };
 
 export default loaders;

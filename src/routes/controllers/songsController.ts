@@ -1,5 +1,8 @@
 import File from "../../models/File";
 import { ExpressMiddleware } from "../../types/types";
+import CONFIG from "../../config/config";
+
+const { S3_BUCKET, S3_REGION } = CONFIG;
 
 const getUserFile: ExpressMiddleware = async (req, res, next) => {
   try {
@@ -11,7 +14,7 @@ const getUserFile: ExpressMiddleware = async (req, res, next) => {
 
       return {
         key: file.s3Location,
-        url: `https://${process.env.BUCKET}.s3.${process.env.REGION}.amazonaws.com/${file.s3Location}`,
+        url: `https://${S3_BUCKET}.s3.${S3_REGION}.amazonaws.com/${file.s3Location}`,
         mimeType,
         title: file.title,
         creationTime: file.creationTime,

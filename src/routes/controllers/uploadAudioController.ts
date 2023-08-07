@@ -4,6 +4,9 @@ import path from "path";
 import User from "../../models/User";
 import File from "../../models/File";
 import s3 from "../../config/s3Client";
+import CONFIG from "../../config/config";
+
+const { S3_BUCKET } = CONFIG;
 
 export const uploadToS3: ExpressMiddleware = async (req, res, next) => {
   if (!req.file) {
@@ -11,7 +14,7 @@ export const uploadToS3: ExpressMiddleware = async (req, res, next) => {
   }
 
   const params = {
-    Bucket: process.env.BUCKET,
+    Bucket: S3_BUCKET,
     Key: `audio-${Date.now()}${path.extname(req.file.originalname)}`,
     Body: req.file.buffer,
     ContentType: req.file.mimetype,

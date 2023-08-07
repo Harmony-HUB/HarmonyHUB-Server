@@ -3,7 +3,7 @@ import indexRouter from "../routes/index";
 import userRouter from "../routes/user";
 import protectedRouter from "../routes/protected";
 import uploadAudioRouter from "../routes/uploadAudio";
-import songsRouter from "../routes/songs";
+import musicsRouter from "../routes/musics";
 import authRouter from "../routes/auth";
 
 const routesHandler = async (app: Express) => {
@@ -11,7 +11,7 @@ const routesHandler = async (app: Express) => {
   app.use("/user", userRouter);
   app.use("/protected", protectedRouter);
   app.use("/uploadAudio", uploadAudioRouter);
-  app.use("/songs", songsRouter);
+  app.use("/musics", musicsRouter);
   app.use("/auth", authRouter);
 };
 
