@@ -3,7 +3,8 @@ import { UserType } from "./types";
 declare global {
   namespace Express {
     interface Request {
-      user?: UserType;
+      user: UserType;
+      s3Key: string;
     }
   }
 }

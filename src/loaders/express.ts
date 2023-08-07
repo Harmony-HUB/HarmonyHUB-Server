@@ -18,4 +18,4 @@ const expressHandler = async (app: Express) => {
   app.use(cookieParser());
 };
 
-module.exports = expressHandler;
+export default expressHandler;

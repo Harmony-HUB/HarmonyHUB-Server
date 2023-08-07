@@ -1,8 +1,8 @@
 import jwt, { VerifyErrors } from "jsonwebtoken";
-import { refreshSecret } from "../utils/tokens";
-import User from "../models/User";
-import { generateAccessToken } from "../utils/tokens";
-import { ExpressMiddleware } from "../types/types";
+import { refreshSecret } from "../../utils/tokens";
+import User from "../../models/User";
+import { generateAccessToken } from "../../utils/tokens";
+import { ExpressMiddleware, UserType } from "../../types/types";
 
 const verifyRefreshToken: ExpressMiddleware = async (req, res, next) => {
   const { refreshToken } = req.body;
@@ -14,7 +14,7 @@ const verifyRefreshToken: ExpressMiddleware = async (req, res, next) => {
   jwt.verify(
     refreshToken,
     refreshSecret,
-    async (err: VerifyErrors | null, user: any) => {
+    async (err: VerifyErrors | null, user: UserType) => {
       if (err) {
         return res.sendStatus(403);
       }

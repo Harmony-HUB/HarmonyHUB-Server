@@ -1,10 +1,11 @@
-const { PutObjectCommand } = require("@aws-sdk/client-s3");
-const path = require("path");
-const User = require("../models/User");
-const File = require("../models/File");
-const s3 = require("../config/s3Client");
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { ExpressMiddleware } from "../../types/types";
+import path from "path";
+import User from "../../models/User";
+import File from "../../models/File";
+import s3 from "../../config/s3Client";
 
-exports.uploadToS3 = async (req, res, next) => {
+export const uploadToS3: ExpressMiddleware = async (req, res, next) => {
   if (!req.file) {
     return res.status(400).send("파일이 없습니다.");
   }
@@ -27,7 +28,7 @@ exports.uploadToS3 = async (req, res, next) => {
   }
 };
 
-exports.saveFile = async (req, res, next) => {
+export const saveFile: ExpressMiddleware = async (req, res, next) => {
   try {
     const { userEmail, title, description } = req.body;
 
@@ -39,9 +40,9 @@ exports.saveFile = async (req, res, next) => {
 
     const newFile = new File({
       userID: user.id,
-      fileName: req.file.originalname,
-      fileType: req.file.mimetype,
-      fileSize: req.file.size,
+      fileName: req.file?.originalname,
+      fileType: req.file?.mimetype,
+      fileSize: req.file?.size,
       s3Location: req.s3Key,
       title,
       description,
@@ -49,8 +50,6 @@ exports.saveFile = async (req, res, next) => {
 
     await newFile.save();
     res.sendStatus(200);
-
-    next();
   } catch (error) {
     console.error("업로드 중 오류가 발생했습니다.:", error);
     res.status(500).send("업로드 중 오류가 발생했습니다.");

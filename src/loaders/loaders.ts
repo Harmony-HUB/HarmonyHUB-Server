@@ -1,8 +1,8 @@
 import { Express } from "express";
-const connectToDatabase = require("../config/database");
-const expressHandler = require("./express.ts");
-const setupErrorHandlers = require("./error.ts");
-const routesHandler = require("./routes");
+import connectToDatabase from "../config/database";
+import expressHandler from "./express";
+import setupErrorHandlers from "./error";
+import routesHandler from "./routes";
 
 const loaders = async (app: Express) => {
   await connectToDatabase();

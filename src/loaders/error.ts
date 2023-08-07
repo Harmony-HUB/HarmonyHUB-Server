@@ -10,8 +10,10 @@ const errorHandler: ExpressErrorMiddleware = (err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  res.status(err.status || 500);
-  res.render("error");
+  const statusCode = err.status || 500;
+  const errorMessage = statusCode === 500 ? "서버 오류" : err.message;
+
+  res.status(500).json({ error: errorMessage });
 };
 
 const setupErrorHandlers = (app: Express) => {
@@ -19,4 +21,4 @@ const setupErrorHandlers = (app: Express) => {
   app.use(errorHandler);
 };
 
-module.exports = setupErrorHandlers;
+export default setupErrorHandlers;

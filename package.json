@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "ts-node ./bin/www.ts",
+    "start": "ts-node --files ./src/bin/www.ts",
     "pre-commit": "lint-staged && rm -rf .git/hooks && ln -s ../.husky .git/hooks",
     "dev": "nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node --files' ./src/app.ts"
   },

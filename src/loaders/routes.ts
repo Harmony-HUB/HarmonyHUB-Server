@@ -1,10 +1,10 @@
 import { Express } from "express";
-const indexRouter = require("../routes/index");
-const userRouter = require("../routes/user");
-const protectedRouter = require("../routes/protected");
-const uploadAudioRouter = require("../routes/uploadAudio");
-const songsRouter = require("../routes/songs");
-const authRouter = require("../routes/auth");
+import indexRouter from "../routes/index";
+import userRouter from "../routes/user";
+import protectedRouter from "../routes/protected";
+import uploadAudioRouter from "../routes/uploadAudio";
+import songsRouter from "../routes/songs";
+import authRouter from "../routes/auth";
 
 const routesHandler = async (app: Express) => {
   app.use("/", indexRouter);
@@ -15,4 +15,4 @@ const routesHandler = async (app: Express) => {
   app.use("/auth", authRouter);
 };
 
-module.exports = routesHandler;
+export default routesHandler;

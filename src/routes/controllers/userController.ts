@@ -1,10 +1,7 @@
-const User = require("../models/User");
-const {
-  generateRefreshToken,
-  generateAccessToken,
-} = require("../utils/tokens.ts");
-
-const registerUser = async (req, res, next) => {
+import User from "../../models/User";
+import { generateRefreshToken, generateAccessToken } from "../../utils/tokens";
+import { ExpressMiddleware } from "../../types/types";
+const registerUser: ExpressMiddleware = async (req, res, next) => {
   const { email, name } = req.body;
 
   try {
@@ -21,12 +18,10 @@ const registerUser = async (req, res, next) => {
     const accessToken = generateAccessToken(user);
 
     res.json({ refreshToken: user.refreshToken, accessToken });
-
-    next();
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 };
 
-module.exports = registerUser;
+export default registerUser;
