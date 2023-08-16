@@ -1,6 +1,6 @@
 import express from "express";
 import authenticateJWT from "./middleware/authenticateJWT";
-import getUserFiles from "./controllers/songsController";
+import getUserFiles from "./controllers/musicsController";
 
 const router = express.Router();
 
