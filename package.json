@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "ts-node --files ./src/bin/www.ts",
+    "start": "ts-node ./src/bin/www.ts",
     "pre-commit": "lint-staged && rm -rf .git/hooks && ln -s ../.husky .git/hooks",
-    "dev": "nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node --files' ./src/app.ts"
+    "dev": "nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node' ./src/app.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.317.0",

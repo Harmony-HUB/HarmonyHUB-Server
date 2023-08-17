@@ -6,7 +6,9 @@ const { S3_BUCKET, S3_REGION } = CONFIG;
 
 const getUserFile: ExpressMiddleware = async (req, res, next) => {
   try {
-    const files = await File.find({ userID: req.user.id }).populate("userID");
+    const files = await File.find({ userID: req.body.user.id }).populate(
+      "userID",
+    );
 
     const songs = files.map(file => {
       const fileExtension = file.fileName.split(".").pop()?.toLowerCase();

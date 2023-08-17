@@ -1,5 +1,5 @@
 import jwt, { VerifyErrors } from "jsonwebtoken";
-import { ExpressMiddleware, UserType } from "../../types/types";
+import { ExpressMiddleware } from "../../types/types";
 import { accessSecret } from "../../utils/tokens";
 
 const authenticateJWT: ExpressMiddleware = (req, res, next) => {
@@ -11,7 +11,7 @@ const authenticateJWT: ExpressMiddleware = (req, res, next) => {
       if (err) {
         return res.sendStatus(403);
       }
-      req.user = user as UserType;
+      req.body.user = user;
 
       return next();
     });

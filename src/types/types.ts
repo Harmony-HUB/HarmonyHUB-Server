@@ -19,3 +19,9 @@ export type UserType = {
   email: string;
   refreshToken: string;
 };
+
+export type TokenType = {
+  id: string;
+  iat: number;
+  exp: number;
+};

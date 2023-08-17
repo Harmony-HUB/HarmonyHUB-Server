@@ -22,7 +22,7 @@ export const uploadToS3: ExpressMiddleware = async (req, res, next) => {
 
   try {
     await s3.send(new PutObjectCommand(params));
-    req.s3Key = params.Key;
+    req.body.s3Key = params.Key;
 
     next();
   } catch (error) {
@@ -46,7 +46,7 @@ export const saveFile: ExpressMiddleware = async (req, res, next) => {
       fileName: req.file?.originalname,
       fileType: req.file?.mimetype,
       fileSize: req.file?.size,
-      s3Location: req.s3Key,
+      s3Location: req.body.s3Key,
       title,
       description,
     });

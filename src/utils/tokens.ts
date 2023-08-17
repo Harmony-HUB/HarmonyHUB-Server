@@ -11,7 +11,7 @@ export const refreshSecret = `${REFRESH_SECRET}`;
 
 export const generateAccessToken = (user: Partial<UserType>) => {
   return jwt.sign({ id: user.id }, accessSecret, {
-    expiresIn: "1h",
+    expiresIn: "1d",
   });
 };
 
